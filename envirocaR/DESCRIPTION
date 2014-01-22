@@ -1,0 +1,9 @@
+Package: envirocaR
+Type: Package
+Title: Analysis of car trajectories provided by Envirocar project
+Version: 1.0
+Date: 2013-11-13
+Author: Edzer Pebesma, Christoph Stasch
+Maintainer: Edzer Pebesma <e.pebesma@uni-muenster.de>
+Description: This package allows to retrieve car trajectories from the Envirocar project and provides some specific analysis methods.
+License: file License
