@@ -1,0 +1,7 @@
+exportPattern("^[[:alpha:]]+")
+import(rjson) # fromJSON
+import(maptools) # spCbind
+import(rgdal) #readOGR
+import(stringr) #str_replace_all
+import(spacetime) #Tracks
+import(RCurl) #getURL,parseHeader
