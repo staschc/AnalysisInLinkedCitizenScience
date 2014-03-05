@@ -17,10 +17,11 @@ class(newTrack)
 newTrack2 = aggregateTrack(track=trackData)
 class(newTrack2)
 
-plot(trackData@tracks$Track1@sp,col="blue",pch="*")
+plot(trackData@tracks$Track1@sp@coords,col="blue",pch="*")
 points(newTrack@sp,col="red",pch="o")
 points(newTrack2@sp,col="green",pch="O")
 
 plot(trackData@tracks$Track1@data$Speed,type="l",col="blue"); par(new=TRUE)
 plot(newTrack@data$aggr.Speed,type="l",col="red",lwd=2); par(new=TRUE)
 plot(newTrack2@data$Speed,type="l",col="green",lwd=2)
+
