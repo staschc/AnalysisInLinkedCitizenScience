@@ -25,7 +25,7 @@ importEnviroCar = function(file) {
   # thanks to Kristina Helle!
   # dynamic parsing of phenomenon names and units
   phenomenonsUrl = "https://www.envirocar.org/api/stable/phenomenons"
-  phenomenons = fromJSON(getURL(phenomenonsUrl))
+  phenomenons = fromJSON(getURL(phenomenonsUrl, ssl.verifypeer = FALSE))
   colNames <- str_replace_all(sapply(phenomenons[[1]], "[[", "name"), pattern=" ", repl=".")
   
   resultMatrix = matrix(nrow=length(l2),ncol=length(colNames))
