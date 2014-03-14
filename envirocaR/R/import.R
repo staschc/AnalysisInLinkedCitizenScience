@@ -11,11 +11,15 @@ importEnviroCar = function(serverUrl, trackIDs, bbox, timeInterval) {
   
   #query track IDs for bounding box and time interval; if trackIDs paramter is set, bbox and timeInterval are ignored
   if (missing(trackIDs)){
-    trackIDs = getTrackIDs(bbox,timeInterval)
+    trackIDs = getTrackIDs(serverUrl,bbox,timeInterval)
   }
   
   #query track for each trackID
-  tracks = TracksCollection(lapply(trackIDs,importSingleTrack,serverUrl=serverUrl))
+  if (length(trackIDs)==0) {
+    tracks = TracksCollection(Tracks(list()))
+  } else {
+    tracks = TracksCollection(lapply(trackIDs,importSingleTrack,serverUrl=serverUrl))
+  }
   return(tracks)
 }
 
@@ -65,9 +69,14 @@ importSingleTrack <- function(serverUrl,trackID,verbose=FALSE){
   if (length(layer) == nrow(result)) {
     layer = spCbind(layer, result)
     stidf = STIDF(geometry(layer), layer$time, layer@data)
+    #filtering of duplicate measurements in a single track
+    redundant = which(diff(as.numeric(index(stidf@time)))==0)
+    if(length(redundant)!=0){
+      stidf = stidf[-redundant,]
+    }
     track = Track(stidf)
     attr(track, "units") = units
-    tracks = Tracks(list(track)) #TODO: group single tracks by 
+    tracks = Tracks(list(track)) #TODO: group single tracks 
     return(tracks)
   } else
     NULL  
@@ -149,7 +158,7 @@ getTrackIDs <- function(serverUrl,bbox,timeInterval,verbose=FALSE){
 #' 
 #' @param headerParam url to server
 #' @return Tracks objects for the requested tracks
-#' TODO: unclear how to encode temporalFilter!!
+#'
 #'
 parseLinkHeaderParam <- function(headerParam){
   if (grepl("rel=",headerParam)){
