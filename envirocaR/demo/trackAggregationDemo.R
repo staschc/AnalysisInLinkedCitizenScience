@@ -1,4 +1,4 @@
-library(envirocaR)
+library(enviroCaR)
 
 #query track IDs and choose random track
 serverUrl = "https://envirocar.org/api/stable"
